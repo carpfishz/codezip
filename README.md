@@ -1,2 +1,2 @@
 # codezip - Online compiler project
-[요구분석서](./README.md)
+[요구분석서](./srs.md)
