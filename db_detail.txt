@@ -1,0 +1,38 @@
+유저 테이블
+계정명(PK), 패스워드, 이름, 이메일
+
+코드 테이블
+인덱스(PK), 코드 제목, 코드 내용, 언어, 공개 여부(default 0 -> 비공개), 계정명(FK)
+
+즐겨찾기 테이블
+인덱스(PK), 계정명(FK), 코드 인덱스(FK), 즐겨찾기 여부(1 -> 즐겨찾기 설정)
+
+==== query ====
+
+create table user(
+id varchar(20) NOT NULL primary key,
+pw varchar(255) NOT NULL,
+name varchar(20) NOT NULL,
+email varchar(30) NOT NULL
+);
+
+create table code(
+idx int auto_increment primary key,
+title varchar(30) default 'main',
+content text,
+lang varchar(20),
+openpub char(1) default 0,
+id varchar(20),
+foreign key(id) references user(id) on delete cascade
+);
+
+create table favorite(
+idx int auto_increment primary key,
+id varchar(20),
+codeidx int,
+fav char(1),
+foreign key(id) references user(id) on delete cascade,
+foreign key(codeidx) references code(idx) on delete cascade
+);
+
+===============

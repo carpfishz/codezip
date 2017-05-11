@@ -29,7 +29,7 @@ if($login->is_loggedin()!="") {
 <div id="wrapper">
     <div id="image-wrapper">
         <h1>
-            <a href="logmain.php">CodeZip - Online Compiler</a>
+            <a href="logmain.php">CodeZip</a>
         </h1>
     </div>
     <div id="form-wrapper">

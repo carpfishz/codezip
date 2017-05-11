@@ -6,6 +6,12 @@
  * Time: PM 5:33
  */
 
+session_start();
+require_once 'class.user.php';
+$login = new user();
+if($login->is_loggedin()!="") {
+    $login->redirection('main.php');
+}
 ?>
 
 <!DOCTYPE html>
@@ -23,7 +29,7 @@
 <div id="wrapper">
     <div id="image-wrapper">
         <h1>
-            <a href="/">CodeZip - Online Compiler</a>
+            <a href="/">CodeZip</a>
         </h1>
     </div>
     <div id="button-wrapper">
