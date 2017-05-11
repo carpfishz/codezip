@@ -23,8 +23,8 @@ if(isset($_POST['submit'])) {
         $login->redirection('main.php');
     } else {
         $error = "fail";
-        $login->redirection('index.php');
+        $login->redirection('logmain.php');
     }
 } else {
-    $login->redirection('index.php');
+    $login->redirection('logmain.php');
 }

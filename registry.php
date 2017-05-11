@@ -36,7 +36,7 @@ if(isset($_POST['submit'])) {
         </script>";
     } else {
         $user->register($userId, $userPw, $userName, $userEmail);
-        $user->redirection('index.php');
+        $user->redirection('logmain.php');
     }
 } else {
     $user->redirection('signup.php');
