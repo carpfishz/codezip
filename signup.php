@@ -19,11 +19,11 @@ if($login->is_loggedin()!="") {
 <head>
     <meta charset="UTF-8">
     <title>CodeZip sign up page</title>
-    <!--<link rel="stylesheet" href="css/init.css">
+    <link rel="stylesheet" href="css/init.css">
     <link rel="stylesheet" href="css/signup.css">
     <link rel="stylesheet" href="css/nanumbarungothic.css">
     <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
-    <script type="text/javascript" src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>-->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 </head>
 <body>
 <div id="wrapper">
