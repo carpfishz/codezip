@@ -2,8 +2,8 @@
 /**
  * Created by PhpStorm.
  * User: sangminlee
- * Date: 2017. 5. 11.
- * Time: PM 6:28
+ * Date: 2017. 5. 23.
+ * Time: AM 3:27
  */
 
 session_start();
@@ -12,36 +12,37 @@ $login = new user();
 if($login->is_loggedin()!="") {
     $login->redirection('main.php');
 }
+
+$userId = strip_tags($_POST['userId']);
 ?>
 
 <!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>CodeZip - Online Compiler</title>
+    <title>CodeZip sign up page</title>
     <link rel="stylesheet" href="css/init.css">
-    <link rel="stylesheet" href="css/logmain.css">
+    <link rel="stylesheet" href="css/forget.css">
     <link rel="stylesheet" href="css/nanumbarungothic.css">
     <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
     <script type="text/javascript" src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 </head>
 <body>
-<div id="signup-wrapper">
-    <button id="signup-button" onclick="location.href='signup.php'" class="btn">가입</button>
-</div>
 <div id="wrapper">
     <div id="image-wrapper">
         <h1>
-            <a href="/logmain.php">CodeZip</a>
+            <a href="logmain.php">CodeZip</a>
         </h1>
     </div>
     <div id="form-wrapper">
-        <form action="login.php" method="POST" id="login_form">
-            <input type="text" name="userEmail" placeholder="아이디 또는 이메일 주소" required autofocus>
-            <input type="password" name="userPw" placeholder="비밀번호" required>
-            <input type="submit" value="로그인" name="submit" id="login_submit">
+        <form action="changePW.php" method="POST" id="forgetpw_form">
+            <input type="password" name="userPw" placeholder="비밀번호" required autofocus>
+            <input type="password" name="userPwcheck" placeholder="비밀번호 확인" required>
+            <input type="submit" value="비밀번호변경" name="submit" id="forgetpw_submit">
+            <?php
+                echo '<input type="hidden" name="userId" value="'.$userId.'">';
+            ?>
         </form>
-        <a href="forget.php" id="forget">아이디 / 비밀번호 찾기</a>
     </div>
 </div>
 </body>
