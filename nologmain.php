@@ -33,7 +33,7 @@ if(!isset($_POST['val1'])){
 <body>
     <div id="wrapper">
         <div id="form-wrapper">
-            <form action="mkdir_test.php" method="POST" id="code_form">
+            <form action="run.php" method="POST" id="code_form">
                 <textarea id="code_area" class="codemirror-textarea" name="user_code" autocorrect="off" autocomplete="off" autocapitalize="off" spellcheck="false" wrap="off" style="width: 100%; height:600px;">print("hello!")</textarea>
                 <select id="select_code" name="select_code" onchange="setValue()">
                     <option id="default" value="python">Python</option>

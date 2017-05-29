@@ -2,8 +2,8 @@
 /**
  * Created by PhpStorm.
  * User: sangminlee
- * Date: 2017. 4. 22.
- * Time: PM 5:34
+ * Date: 2017. 5. 29.
+ * Time: PM 10:27
  */
 
 require_once("session.php");
@@ -26,7 +26,7 @@ $userRow=$stmt->fetch(PDO::FETCH_ASSOC);
     <link rel="stylesheet" href="css/init.css">
     <link rel="stylesheet" href="css/nanumbarungothic.css">
     <link rel="stylesheet" href="css/main.css">
-<!--    <link rel="stylesheet" href="css/bootstrap.min.css">-->
+    <!--    <link rel="stylesheet" href="css/bootstrap.min.css">-->
     <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
     <script type="text/javascript" src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
     <script type="text/javascript" src="main.js"></script>
@@ -45,8 +45,8 @@ $userRow=$stmt->fetch(PDO::FETCH_ASSOC);
     <div id="logout">
         <a href="#" id="cs-button">코드 검색</a>
         <a href="mypage.php">마이페이지</a>
+        <a href="#" id="ct-button">비밀번호 변경</a>
         <a href="logout.php">로그아웃</a>
-        <a href="#" id="ct-button" style="display: none;">비밀번호 변경</a>
     </div>
 </header>
 
@@ -91,6 +91,9 @@ $userRow=$stmt->fetch(PDO::FETCH_ASSOC);
             <div id="form-wrapper">
                 <form action="run1.php" method="POST" id="code_form">
                     <input type="text" name="user_code_title" placeholder="코드 제목" required>
+<!--                    즐겨찾기 체크박스로-->
+                    <button type="button">수정하기</button>
+                    <button type="button">삭제하기</button>
                     <input type="radio" name="disclosure" value="1" checked>공개
                     <input type="radio" name="disclosure" value="0">비공개
                     <textarea class="codemirror-textarea" name="user_code" autocorrect="off" autocomplete="off" autocapitalize="off" spellcheck="false" wrap="off" style="width: 100%; height:600px;">print("hello!")</textarea>
