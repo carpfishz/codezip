@@ -33,7 +33,7 @@ a, a:visited, a:link { text-decoration:none ; color: #000000; }
 #content > #main_aside {
     width: 10%;
     float: left;
-    background: blue;
+    background: #e3e3f3;
 }
 
 #content > #main_section {

@@ -9,6 +9,7 @@
 require_once("session.php");
 require_once("class.user.php");
 
+$idx = $_GET['idx'];
 $auth_user = new user();
 $user_id = $_SESSION['user_session'];
 
@@ -16,6 +17,9 @@ $stmt = $auth_user->runQuery("SELECT * FROM user WHERE id=:userId");
 $stmt->execute(array(":userId"=>$user_id));
 $userRow=$stmt->fetch(PDO::FETCH_ASSOC);
 
+$stmt = $auth_user->runQuery("SELECT * FROM code WHERE id=:userId");
+$stmt->execute(array(":userId"=>$user_id));
+$stmt_temp = [];
 ?>
 
 <!DOCTYPE html>
@@ -73,9 +77,9 @@ $userRow=$stmt->fetch(PDO::FETCH_ASSOC);
             <h2>Modal Header</h2>
         </div>
         <div class="modal-body">
-            <input type="text" name="user_code_title" placeholder="코드 제목" required>
+            <input type="text" name="user_code_title1" placeholder="코드 제목" required>
             <input type="text" name="userId" placeholder="사용자 아이디">
-            <input type="submit" value="Run" name="submit" id="code_submit">
+            <input type="submit" value="Run" name="submit" id="code_submit1">
         </div>
     </form>
 </div>
@@ -84,19 +88,38 @@ $userRow=$stmt->fetch(PDO::FETCH_ASSOC);
     <aside id="main_aside">
         <div id="profile">
             <h1><?php print($userRow['name']); ?>님 환영합니다.</h1>
+            <?php
+            while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $stmt_temp[$row['idx']] = $row;
+                echo "<div onclick='location.href=".'"./mypage.php?idx=' .$row['idx']. '"'."'>"  .$row['title'] . "[" . $row['lang'] . "]" ."</div>";
+            }
+            ?>
         </div>
     </aside>
     <section id="main_section">
         <div id="wrapper">
             <div id="form-wrapper">
-                <form action="run1.php" method="POST" id="code_form">
-                    <input type="text" name="user_code_title" placeholder="코드 제목" required>
+                <form action="run.php" method="POST" id="code_form" novalidate>
+                    <?php
+                        $placeholder = "코드 제목";
+                        $name = '';
+                        if(isset($idx)){
+                            $placeholder = "";
+                            $name = $stmt_temp[$idx]['title'];
+                        }
+                    ?>
+                    <input type="text" name="user_code_title" placeholder="<?php echo $placeholder?>" value="<?php echo $name?>" required>
 <!--                    즐겨찾기 체크박스로-->
-                    <button type="button">수정하기</button>
-                    <button type="button">삭제하기</button>
+                    <button type="button" id='modi' onclick="modify();">수정하기</button>
+                    <button type="button" id="dele" onclick="delcode();">삭제하기</button>
                     <input type="radio" name="disclosure" value="1" checked>공개
                     <input type="radio" name="disclosure" value="0">비공개
-                    <textarea class="codemirror-textarea" name="user_code" autocorrect="off" autocomplete="off" autocapitalize="off" spellcheck="false" wrap="off" style="width: 100%; height:600px;">print("hello!")</textarea>
+                    <textarea class="codemirror-textarea" name="user_code" autocorrect="off" autocomplete="off" autocapitalize="off" spellcheck="false" wrap="off" style="width: 100%; height:600px;"><?php
+                        if(isset($idx)){print_r($stmt_temp[$idx]['content']);
+                        }else{
+                            ?>print("hello!")<?php }
+                        ?></textarea>
+                    <input type="text" style="display: none" name="idx" value="<?php echo $idx?>">
                     <input type="submit" value="Run" name="submit" id="code_submit">
                 </form>
                 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
@@ -104,6 +127,19 @@ $userRow=$stmt->fetch(PDO::FETCH_ASSOC);
                 <link rel="stylesheet" href="lib/codemirror.css">
                 <script src="mode/python/python.js"></script>
                 <script src="./default.js"></script>
+                <script>
+                    function modify(){
+                        $('#code_form').attr("action","code_modify.php");
+                        $('#code_form').submit();
+                        $("#code_submit").click();
+                    }
+
+                    function delcode(){
+                        $('#code_form').attr("action","code_delete.php");
+                        $('#code_form').submit();
+                        $("#code_submit").click();
+                    }
+                </script>
             </div>
         </div>
     </section>

@@ -16,7 +16,7 @@ $stmt->execute(array(":userId"=>$user_id));
 $userRow=$stmt->fetch(PDO::FETCH_ASSOC);
 
 if(isset($_POST['submit'])) {
-    $title = $_POST['user_code_title'];
+    $title = $_POST['user_code_title1'];
     $userId = $userRow['id'];
 
     if(isset($_POST['userId'])) {

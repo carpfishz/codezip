@@ -73,9 +73,9 @@ $userRow=$stmt->fetch(PDO::FETCH_ASSOC);
             <h2>Modal Header</h2>
         </div>
         <div class="modal-body">
-            <input type="text" name="user_code_title" placeholder="코드 제목" required>
+            <input type="text" name="user_code_title1" placeholder="코드 제목" required>
             <input type="text" name="userId" placeholder="사용자 아이디">
-            <input type="submit" value="Run" name="submit" id="code_submit">
+            <input type="submit" value="Run" name="submit" id="code_submit1">
         </div>
     </form>
 </div>
@@ -89,8 +89,9 @@ $userRow=$stmt->fetch(PDO::FETCH_ASSOC);
     <section id="main_section">
         <div id="wrapper">
             <div id="form-wrapper">
-                <form action="run1.php" method="POST" id="code_form">
+                <form action="run.php" method="POST" id="code_form">
                     <input type="text" name="user_code_title" placeholder="코드 제목" required>
+                    <button type="button" id='store' onclick="storecode();">저장하기</button>
                     <input type="radio" name="disclosure" value="1" checked>공개
                     <input type="radio" name="disclosure" value="0">비공개
                     <textarea class="codemirror-textarea" name="user_code" autocorrect="off" autocomplete="off" autocapitalize="off" spellcheck="false" wrap="off" style="width: 100%; height:600px;">print("hello!")</textarea>
@@ -101,6 +102,13 @@ $userRow=$stmt->fetch(PDO::FETCH_ASSOC);
                 <link rel="stylesheet" href="lib/codemirror.css">
                 <script src="mode/python/python.js"></script>
                 <script src="./default.js"></script>
+                <script>
+                    function storecode(){
+                        $('#code_form').attr("action","code_store.php");
+                        $('#code_form').submit();
+                        $("#code_submit").click();
+                    }
+                </script>
             </div>
         </div>
     </section>
