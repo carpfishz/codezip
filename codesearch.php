@@ -27,7 +27,7 @@ if(isset($_POST['submit'])) {
 
     $openpub = '1';
 
-    $stmt = $user->runQuery("SELECT * FROM code WHERE (title=:title AND openpub=:openpub) OR id=:userId");
+    $stmt = $user->runQuery("SELECT * FROM code WHERE (title=:title OR id=:userId) AND openpub=:openpub");
     $stmt->bindparam(":title", $title);
     $stmt->bindparam(":userId", $userId);
     $stmt->bindparam(":openpub", $openpub);
