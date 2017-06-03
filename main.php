@@ -95,7 +95,7 @@ $stmt_temp = [];
                 $stmt1->execute(array(":codeidx"=>$idx));
                 $row1 = $stmt1->fetch(PDO::FETCH_ASSOC);
                 $stmt_temp[$row1['idx']] = $row1;
-                echo "<div onclick='location.href=".'"./main.php?idx=' .$row1['idx']. '"'."'>"  .$row1['title'] . "[" . $row1['lang'] . "]" ."</div>";
+                echo "<div onclick='location.href=".'"./main.php?idx=' .$row1['idx']. '"'."'>"  .$row1['title'] . "[" . $row1['lang'] . "]" . " - " . $row1['id']. "</div>";
             }
             ?>
         </div>
