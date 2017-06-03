@@ -9,6 +9,7 @@
 require_once("session.php");
 require_once("class.user.php");
 
+$getidx = $_GET['idx'];
 $auth_user = new user();
 $user_id = $_SESSION['user_session'];
 
@@ -16,6 +17,9 @@ $stmt = $auth_user->runQuery("SELECT * FROM user WHERE id=:userId");
 $stmt->execute(array(":userId"=>$user_id));
 $userRow=$stmt->fetch(PDO::FETCH_ASSOC);
 
+$stmt = $auth_user->runQuery("SELECT codeidx FROM favorite WHERE id=:userId AND fav='1'");
+$stmt->execute(array(":userId"=>$user_id));
+$stmt_temp = [];
 ?>
 
 <!DOCTYPE html>
@@ -84,17 +88,44 @@ $userRow=$stmt->fetch(PDO::FETCH_ASSOC);
     <aside id="main_aside">
         <div id="profile">
             <h1><?php print($userRow['name']); ?>님 환영합니다.</h1>
+            <?php
+            while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $idx = $row['codeidx'];
+                $stmt1 = $auth_user->runQuery("SELECT * FROM code WHERE idx=:codeidx");
+                $stmt1->execute(array(":codeidx"=>$idx));
+                $row1 = $stmt1->fetch(PDO::FETCH_ASSOC);
+                $stmt_temp[$row1['idx']] = $row1;
+                echo "<div onclick='location.href=".'"./main.php?idx=' .$row1['idx']. '"'."'>"  .$row1['title'] . "[" . $row1['lang'] . "]" ."</div>";
+            }
+            ?>
         </div>
     </aside>
     <section id="main_section">
         <div id="wrapper">
             <div id="form-wrapper">
-                <form action="run.php" method="POST" id="code_form">
-                    <input type="text" name="user_code_title" placeholder="코드 제목" required>
-                    <button type="button" id='store' onclick="storecode();">저장하기</button>
+                <form action="run.php" method="POST" id="code_form" novalidate>
+                    <?php
+                    $placeholder = "코드 제목";
+                    $name = '';
+                    if(isset($getidx)){
+                        $placeholder = "";
+                        $name = $stmt_temp[$getidx]['title'];
+                    }
+                    ?>
+                    <input type="text" name="user_code_title" placeholder="<?php echo $placeholder?>" value="<?php echo $name?>" required>
                     <input type="radio" name="disclosure" value="1" checked>공개
                     <input type="radio" name="disclosure" value="0">비공개
-                    <textarea class="codemirror-textarea" name="user_code" autocorrect="off" autocomplete="off" autocapitalize="off" spellcheck="false" wrap="off" style="width: 100%; height:600px;">print("hello!")</textarea>
+                    <input type="radio" name="fav" value="1">즐겨찾기 설정
+                    <input type="radio" name="fav" value="0" checked>즐겨찾기 미설정
+                    <button type="button" id='store' onclick="storecode();">저장하기</button>
+                    <button type="button" id='store' onclick="favset();">즐겨찾기 설정</button>
+                    <button type="button" id='store' onclick="favclear();">즐겨찾기 해제</button>
+                    <textarea class="codemirror-textarea" name="user_code" autocorrect="off" autocomplete="off" autocapitalize="off" spellcheck="false" wrap="off" style="width: 100%; height:600px;"><?php
+                        if(isset($getidx)){print_r($stmt_temp[$getidx]['content']);
+                        }else{
+                            ?>print("hello!")<?php }
+                        ?></textarea>
+                    <input type="text" style="display: none" name="idx" value="<?php echo $getidx?>">
                     <input type="submit" value="Run" name="submit" id="code_submit">
                 </form>
                 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
@@ -105,6 +136,18 @@ $userRow=$stmt->fetch(PDO::FETCH_ASSOC);
                 <script>
                     function storecode(){
                         $('#code_form').attr("action","code_store.php");
+                        $('#code_form').submit();
+                        $("#code_submit").click();
+                    }
+
+                    function favset(){
+                        $('#code_form').attr("action","code_favset.php");
+                        $('#code_form').submit();
+                        $("#code_submit").click();
+                    }
+
+                    function favclear(){
+                        $('#code_form').attr("action","code_favclear.php");
                         $('#code_form').submit();
                         $("#code_submit").click();
                     }

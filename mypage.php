@@ -110,10 +110,12 @@ $stmt_temp = [];
                     ?>
                     <input type="text" name="user_code_title" placeholder="<?php echo $placeholder?>" value="<?php echo $name?>" required>
 <!--                    즐겨찾기 체크박스로-->
-                    <button type="button" id='modi' onclick="modify();">수정하기</button>
-                    <button type="button" id="dele" onclick="delcode();">삭제하기</button>
                     <input type="radio" name="disclosure" value="1" checked>공개
                     <input type="radio" name="disclosure" value="0">비공개
+                    <button type="button" id='modi' onclick="modify();">수정하기</button>
+                    <button type="button" id="dele" onclick="delcode();">삭제하기</button>
+                    <button type="button" id='store' onclick="favset();">즐겨찾기 설정</button>
+                    <button type="button" id='store' onclick="favclear();">즐겨찾기 해제</button>
                     <textarea class="codemirror-textarea" name="user_code" autocorrect="off" autocomplete="off" autocapitalize="off" spellcheck="false" wrap="off" style="width: 100%; height:600px;"><?php
                         if(isset($idx)){print_r($stmt_temp[$idx]['content']);
                         }else{
@@ -136,6 +138,18 @@ $stmt_temp = [];
 
                     function delcode(){
                         $('#code_form').attr("action","code_delete.php");
+                        $('#code_form').submit();
+                        $("#code_submit").click();
+                    }
+
+                    function favset(){
+                        $('#code_form').attr("action","code_favset.php");
+                        $('#code_form').submit();
+                        $("#code_submit").click();
+                    }
+
+                    function favclear(){
+                        $('#code_form').attr("action","code_favclear.php");
                         $('#code_form').submit();
                         $("#code_submit").click();
                     }
