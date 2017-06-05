@@ -14,7 +14,7 @@ $user_id = $_SESSION['user_session'];
 if(isset($_POST['submit'])) {
     $title = $_POST['user_code_title'];
     $txt = $_POST['user_code'];
-    $lang = 'python';
+    $lang = $_POST['lang'];
     $openpub = $_POST['disclosure'];
     $fav = $_POST['fav'];
 

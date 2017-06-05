@@ -17,6 +17,7 @@ $stmt = $user->runQuery("SELECT * FROM user WHERE id=:userId");
 $stmt->execute(array(":userId"=>$user_id));
 $userRow=$stmt->fetch(PDO::FETCH_ASSOC);
 $stmt_temp = [];
+$lang = $_GET['lang'];
 
 if(isset($_POST['submit'])) {
     $title = $_POST['user_code_title1'];
@@ -128,7 +129,7 @@ if(isset($_POST['submit'])) {
             <?php
             while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                 $stmt_temp[$row['idx']] = $row;
-                echo "<div onclick='location.href=".'"./codesearch.php?idx=' .$row['idx']. '&title=' .$title. '&userId='.$userId.'"'."'>"  .$row['title'] . "[" . $row['lang'] . "]" . " - " . $row['id']. "</div>";
+                echo "<div onclick='location.href=".'"./codesearch.php?idx=' .$row['idx']. '&title=' .$title. '&userId='.$userId. '&lang=' .$row['lang']. '"'."'>"  .$row['title'] . "[" . $row['lang'] . "]" . " - " . $row['id']. "</div>";
 //                echo "<div onclick='location.href=".'"./codesearch.php?idx=' .$row['idx']. '"'."'>"  .$row['title'] . "[" . $row['lang'] . "]" ."</div>";
             }
             ?>
@@ -159,6 +160,12 @@ if(isset($_POST['submit'])) {
                         }else{
                             ?>print("hello!")<?php }
                         ?></textarea>
+                    <input type="radio" name="lang" value="C" onclick="location.href='main.php?lang=C'" id="langC">C
+                    <input type="radio" name="lang" value="C++" onclick="location.href='main.php?lang=C%2B%2B'" id="langCplus">C++
+                    <input type="radio" name="lang" value="Java" onclick="location.href='main.php?lang=Java'" id="langJava">Java
+                    <input type="radio" name="lang" value="Python" onclick="location.href='main.php?lang=Python'" id="langPython">Python
+                    <input type="radio" name="lang" value="Python3" onclick="location.href='main.php?lang=Python3'" id="langPython3" checked="checked">Python3
+                    <input type="radio" name="lang" value="Ruby" onclick="location.href='main.php?lang=Ruby'" id="langRuby">Ruby
                     <input type="text" style="display: none" name="idx" value="<?php echo $getidx?>">
                     <input type="submit" value="Run" name="submit" id="code_submit">
                 </form>
@@ -185,6 +192,13 @@ if(isset($_POST['submit'])) {
                         $('#code_form').submit();
                         $("#code_submit").click();
                     }
+                </script>
+                <script> <?php if($lang == 'C') {echo "$('#langC').attr('checked', 'checked');";}?>
+                    <?php if($lang == 'C++') {echo "$('#langCplus').attr('checked', 'checked');";}?>
+                    <?php if($lang == 'Java') {echo "$('#langJava').attr('checked', 'checked');";}?>
+                    <?php if($lang == 'Python') {echo "$('#langPython').attr('checked', 'checked');";}?>
+                    <?php if($lang == 'Python3') {echo "$('#langPython3').attr('checked', 'checked');";}?>
+                    <?php if($lang == 'Ruby') {echo "$('#langRuby').attr('checked', 'checked');";}?>
                 </script>
             </div>
         </div>
